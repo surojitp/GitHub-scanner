@@ -1,4 +1,4 @@
 # GitHub-scanner
 
-npm install
+npm install\
 npm start
