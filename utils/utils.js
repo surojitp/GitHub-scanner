@@ -21,3 +21,23 @@ exports.scanApi = async (page, token, per_page) => {
         }
     })
 }
+
+exports.workflowApi = async (user, repo, token) => {
+    return new Promise(async (resolve, reject) =>{
+        try{
+            let options = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept:'application/vnd.github+json'
+                }
+            };
+            
+            let gitWorkflow= await axios.get(`https://api.github.com/repos/${user}/${repo}/actions/workflows`, options);
+            
+            resolve(gitWorkflow.data);
+
+        }catch(e){
+            reject(e);
+        }
+    })
+}

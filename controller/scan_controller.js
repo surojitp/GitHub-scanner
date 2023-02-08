@@ -21,8 +21,24 @@ exports.scan = catchAsync(async (req, res, next) => {
         return next(new AppError(e.stack, 500));
 
     }
+});
+exports.workflow = catchAsync(async (req, res, next) => {
+    try{
+        let {user, repo}= req.params;
+        let {token}= req.body;
     
-    
-  
-    
-  });
+        if (!repo || !token) {
+        //  check repo and token
+        return next(new AppError(' please proveide repo and token ', 400));
+        }
+        const scanResult= await utils.workflowApi(user, repo, token);
+        res.status(200).json({
+                    status: 'success',
+                    data: scanResult,
+                });
+
+    }catch(e){
+        return next(new AppError(e.stack, 500));
+
+    }
+});
